@@ -9,7 +9,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <ReduxProvider store={store}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <Toaster richColors position="top-center" />
+        <Toaster richColors position="bottom-center" />
         {children}
       </ThemeProvider>
     </ReduxProvider>
