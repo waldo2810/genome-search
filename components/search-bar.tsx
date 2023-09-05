@@ -5,6 +5,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import UserResult from "./user-result";
 import { useAppSelector } from "@/redux/hooks";
+import { Loader } from "./ui/loader";
 
 const SearchBar = () => {
   const [query, setQuery] = useState<string>("");
@@ -48,7 +49,7 @@ const SearchBar = () => {
       />
       {}
       {isLoading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : (
         <div className="overflow-y-scroll w-full h-[300px] md:h-[500px]">
           {users.map((user) => (
