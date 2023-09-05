@@ -1,24 +1,37 @@
 "use client";
 
 import { bookmarkUser, removeBookmark } from "@/redux/feature/bookmarkSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { User } from "@/types";
 import { Bookmark, BookmarkMinus, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 
 const UserResult = ({ user }: { user: User }) => {
   const dispatch = useAppDispatch();
+  const bookmarkedUsers = useAppSelector(
+    (state) => state.bookmarkReducer.bookmarkedUsers
+  );
 
   const handleBookmark = () => {
     if (user.isBookmark) {
       dispatch(removeBookmark(user.ggId));
+      toast("You have removed " + user.name + " from your bookmarks");
     } else {
-      const updatedUser = { ...user, isBookmark: true };
-      dispatch(bookmarkUser(updatedUser));
+      const isAlreadyBookmarked = bookmarkedUsers.some(
+        (bookmarkedUser) => bookmarkedUser.ggId === user.ggId
+      );
+      if (isAlreadyBookmarked) {
+        toast("You have already bookmarked " + user.name);
+      } else {
+        const updatedUser = { ...user, isBookmark: true };
+        dispatch(bookmarkUser(updatedUser));
+        toast.success("You have bookmarked " + user.name);
+      }
+      // dispatch(clearBookmarks());
     }
-    // dispatch(clearBookmarks());
   };
 
   return (
@@ -26,7 +39,7 @@ const UserResult = ({ user }: { user: User }) => {
       <div className="flex gap-2 items-center">
         <Avatar className="w-12 h-12">
           <AvatarImage src={user.imageUrl} alt={user.name} />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback>U</AvatarFallback>
         </Avatar>
         <div className="flex flex-col gap-1">
           <p className="font-bold">{user.name}</p>

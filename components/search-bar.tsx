@@ -1,14 +1,19 @@
 "use client";
 
-import { ChangeEvent, useState, useEffect } from "react";
+import { User } from "@/types";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import UserResult from "./user-result";
-import { User } from "@/types";
+import { useAppSelector } from "@/redux/hooks";
 
 const SearchBar = () => {
   const [query, setQuery] = useState<string>("");
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const bookmarkedUsers = useAppSelector(
+    (state) => state.bookmarkReducer.bookmarkedUsers
+  );
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
@@ -22,7 +27,7 @@ const SearchBar = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        setUsers(data); // Set users state with the fetched data
+        setUsers(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -41,6 +46,7 @@ const SearchBar = () => {
         placeholder="Type a name to search"
         className="mb-5"
       />
+      {}
       {isLoading ? (
         <p>Loading...</p>
       ) : (
