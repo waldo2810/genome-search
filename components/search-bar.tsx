@@ -33,12 +33,12 @@ const SearchBar = () => {
   }, [query]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-[90%] md:w-3/4 lg:1/2">
+    <div className="flex flex-col items-center justify-center">
       <Input
         type="text"
         value={query}
         onChange={handleChange}
-        placeholder="Search"
+        placeholder="Type a name to search"
         className="mb-5"
       />
       {isLoading ? (

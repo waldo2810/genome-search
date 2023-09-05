@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Genoma search",
+  title: "Genoma Search",
   description: "Find anybody in the torre network",
 };
 

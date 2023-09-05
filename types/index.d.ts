@@ -20,4 +20,5 @@ export interface User {
   creators: any;
   relationDegree: number;
   contact: boolean;
+  isBookmark: boolean;
 }
